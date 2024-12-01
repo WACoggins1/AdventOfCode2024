@@ -1,0 +1,57 @@
+import java.io.File
+import kotlin.math.abs
+
+fun main() {
+    // Path to the file
+    val filePath = "aoc1-1.txt"
+
+    // Initialize two mutable lists to hold the numbers
+    val arr1 = mutableListOf<Int>()
+    val arr2 = mutableListOf<Int>()
+
+    // Read the file line by line
+    File(filePath).forEachLine { line ->
+        // Split each line into two parts based on the space separator
+        val numbers = line.split("   ")
+        if (numbers.size == 2) {
+            // Parse the numbers and add them to the respective arrays
+            arr1.add(numbers[0].toInt())
+            arr2.add(numbers[1].toInt())
+        }
+    }
+
+    // Convert the mutable lists to arrays if needed
+    val array1 = arr1.toTypedArray()
+    val array2 = arr2.toTypedArray()
+
+    // Print the arrays to verify
+    /*
+    println("Array 1: ${array1.joinToString(", ")}")
+    println("Array 2: ${array2.joinToString(", ")}")
+    */
+
+    // Sort the arrays
+    arr1.sort()
+    arr2.sort()
+
+    // calculate the differences and store into a new list
+    val distance = arr1.indices.map { index ->
+        abs(arr1[index] - arr2[index]) //
+
+    }
+
+    // get total sum - this is the answer for part 1.
+    val totalSum = distance.sum()
+
+    println(distance)
+    println("The total distanc sum is: $totalSum") //answer for part 1
+
+    //count distinct entries of arr1, mult by frequency in arr2. add all up.
+    val similarityScore = arr1.distinct().sumOf { value ->
+        val countInArr2 = arr2.count {it == value}
+        value * countInArr2
+    }
+
+    println("Similarity Score: $similarityScore") //answer for part 2
+
+}
